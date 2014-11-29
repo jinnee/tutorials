@@ -24,9 +24,9 @@ void Game::setTitle(char* title) {
     mSdlApplication->setTitle(this->title);
 }
 
-void Game::start(){
+void Game::start(int sw, int sh){
     mSdlApplication->setTitle("SDL Application");
-    mSdlApplication->setWindowSize(500,500);
+    mSdlApplication->setWindowSize(sw, sh);
     mSdlApplication->init();
     mSdlApplication->create();
     screen = mSdlApplication->getSurface();
@@ -50,7 +50,7 @@ void Game::start(){
 // обработка на съобщенията
 void Game::g_events() {
     //има отношение към натоваренноста на процесора
-    SDL_Delay(5);
+    SDL_Delay(20);
     // прихващане на съобщенията
     while (SDL_PollEvent(&event)) {
         int vectorOfSpritesSize = vectorOfSprites.size();
@@ -67,10 +67,8 @@ void Game::g_events() {
 
                     if ( vectorOfSprites[i]->getType() == Constants::SpriteTypes::MOUSE_CURSOR ) {
                         vectorOfSprites[i]->setPosition(mouse_x, mouse_y);
-                        //vectorOfSprites[i]->setMousePosXY(mouse_x, mouse_y);
                     }
-                   //if (vectorOfSprites[i]->getType() != "BACKGROUND")
-                    {
+                    if (vectorOfSprites[i]->getType() != Constants::SpriteTypes::BACKGROUND) {
                         vectorOfSprites[i]->setMousePosXY(mouse_x, mouse_y);
                     }
                     break;
@@ -79,7 +77,6 @@ void Game::g_events() {
                         if (vectorOfSprites[i]->getName() == SpriteManager::mouseEventFrom  ) {
                             vectorOfSprites[i]->setMouseButtonDown(true);
                             vectorOfSprites[i]->setMousePosXY(event.button.x, event.button.y);
-                            cout << vectorOfSprites[i]->getName() <<endl;
                         }
                     }
                     break;

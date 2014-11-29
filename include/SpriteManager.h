@@ -15,6 +15,7 @@ class SpriteManager
         static void setEventFrom(string &mouseEventFrom);
         static void addSprite(AbstractSprite* ss);
         static void deleteSprite(string name);
+        static void deleteSpritesByGroup(string name);
         static AbstractSprite* getSprite(string &name);
         static string mouseEventFrom;
         static vector<AbstractSprite*> vectorOfSprites;

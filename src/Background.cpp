@@ -2,8 +2,8 @@
 
 Background::Background() : StaticSprite()
 {
-    type = "BACKGROUND";
-    name = "BACKGROUND";
+    type = Constants::SpriteTypes::BACKGROUND;
+    name = "background";
     setX(0);
     setY(0);
 }
@@ -14,10 +14,5 @@ Background::~Background()
 }
 
 void Background::render(SDL_Surface* screen) {
-    if ( this->isCursorInSprite() ) {
-        SpriteManager::mouseEventFrom = this->getName();
-        StaticSprite::render(screen);
-    } else {
-        StaticSprite::render(screen);
-    }
+    StaticSprite::render(screen);
 }

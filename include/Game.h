@@ -5,7 +5,7 @@
 #include "AbstractGame.h"
 #include "SdlApplication.h"
 #include "Cursor.h"
-#include "Background.h"
+
 #include "Button.h"
 
 class Game : public SpriteManager, public AbstractGame
@@ -15,7 +15,7 @@ class Game : public SpriteManager, public AbstractGame
         SDL_Surface* screen;
         Game();
         virtual ~Game();
-        void start();
+        void start(int,int);
         SDL_PixelFormat* getPixelFormat();
         void setTitle(char* title);
         void setWindowSize(int,int);

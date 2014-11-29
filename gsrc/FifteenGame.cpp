@@ -8,22 +8,30 @@ FifteenGame::FifteenGame() {
 }
 
 void FifteenGame::init() {
-    cout << "init" << endl;
     this->setTitle("Игра 15");
 
+    // създаваме си обекта background
+    background = new Background();
+    // зареждаме картинката
+    background->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "background.png");
+    // прибавяме към SpriteManager - Game наследява SpriteManager
+    addSprite(background);
 }
 
 void FifteenGame::update(double deltaTime) {
 }
 
 void FifteenGame::render() {
+    // показваме
+    background->render(screen);
 }
 
 void FifteenGame::freeResources() {
-    cout << "freeResources" << endl;
 }
 
 FifteenGame::~FifteenGame() {
+    // премахваме обекта
+    background = 0;
+    delete background;
 }
 
-//int FifteenGame::inGame = 0;

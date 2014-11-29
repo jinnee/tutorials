@@ -10,6 +10,7 @@ namespace Constants {
         static string MOUSE_CURSOR = "MOUSE_CURSOR";
         static string UI_BUTTON = "UI_BUTTON";
         static string LINE_TEXT = "LINE_TEXT";
+        static string BACKGROUND = "BACKGROUND";
     }
     const string pathSeparator =
     #ifdef _WIN32

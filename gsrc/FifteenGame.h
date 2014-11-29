@@ -3,8 +3,8 @@
 #include <iostream>
 
 #include "../include/Game.h"
+#include "../include/Background.h"
 
-using namespace std;
 class FifteenGame : public Game {
 public:
     void init();
@@ -15,6 +15,7 @@ public:
     FifteenGame();
     ~FifteenGame();
 private:
+    Background* background;
 };
 
 #endif // FIFTEENGAME_H

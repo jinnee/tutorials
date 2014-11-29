@@ -16,11 +16,11 @@ bool SdlApplication::init() {
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
         return false;
     } else {
-	if (!(IMG_Init(imageFlags) & imageFlags)) {
-		return false;
-	} else {
-		return true;
-	}
+        if (!(IMG_Init(imageFlags) & imageFlags)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 
@@ -36,7 +36,7 @@ void SdlApplication::create() {
             , this->height // височина на екрана
             // флагове определящи характеристики на прозореца
             // пълният списък може да се види тук https://wiki.libsdl.org/SDL_CreateWindow#flags
-            , SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+            , SDL_WINDOW_SHOWN
             );
 
 }

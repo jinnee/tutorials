@@ -11,11 +11,25 @@ void SpriteManager::addSprite(AbstractSprite* ss){
 
 void SpriteManager::deleteSprite(string name){
     std::vector<AbstractSprite*>::iterator it = vectorOfSprites.begin();
-    for (unsigned int i = 0; i < vectorOfSprites.size(); i++) {
+    int v_size = vectorOfSprites.size();
+    for (unsigned int i = 0; i < v_size; i++) {
         if ( vectorOfSprites[i]->getName() == name ) {
             it = vectorOfSprites.begin()+i;
             vectorOfSprites.erase(it);
             break;
+        }
+    }
+}
+
+void SpriteManager::deleteSpritesByGroup(string name){
+    cout << "delete group" << endl;
+    std::vector<AbstractSprite*>::iterator it = vectorOfSprites.begin();
+    int v_size = vectorOfSprites.size();
+    for (unsigned int i = 0; i < v_size; i++) {
+        if ( vectorOfSprites[i]->getGroup() == name ) {
+            it = vectorOfSprites.begin()+i;
+            vectorOfSprites.erase(it);
+            cout << "delete group" << endl;
         }
     }
 }

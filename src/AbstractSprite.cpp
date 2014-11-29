@@ -19,8 +19,7 @@ void AbstractSprite::setAsActiveSprite() {
     activeName = name;
 }
 
-AbstractSprite::~AbstractSprite()
-{
+AbstractSprite::~AbstractSprite() {
 }
 
 string AbstractSprite::getActiveSprite() {

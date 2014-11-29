@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
     Game * mg = new FifteenGame();
-    mg->start();
+    mg->start(500,500);
     delete mg;
 
    return 0;
