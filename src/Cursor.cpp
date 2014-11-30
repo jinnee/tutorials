@@ -1,19 +1,5 @@
 #include "../include/Cursor.h"
 
-Cursor::Cursor(string &pathCursor): AnimatedSprite() {
-    SDL_ShowCursor(0);
-    type = Constants::SpriteTypes::MOUSE_CURSOR;
-    name = "MouseCursor";
-    setX(0);
-    setY(0);
-    this->pathCursor = pathCursor;
-    setImage(this->pathCursor);
-}
-
-Cursor::~Cursor() {
-    //dtor
-}
-
 void Cursor::changeCursor(string &pathCursor) {
     SDL_FreeSurface(this->getImage());
     this->pathCursor = pathCursor;
@@ -23,3 +9,32 @@ void Cursor::changeCursor(string &pathCursor) {
 void Cursor::render(SDL_Surface* screen) {
     StaticSprite::render(screen);
 }
+
+Cursor* Cursor::getCursor() {
+    if (cursor == 0) {
+        return cursor = new Cursor();
+    }
+    return cursor;
+}
+
+Cursor::Cursor(): AnimatedSprite() {
+    SDL_ShowCursor(0);
+    type = Constants::SpriteTypes::MOUSE_CURSOR;
+    name = "MouseCursor";
+    setX(0);
+    setY(0);
+    if (Cursor::pathCursor != "") {
+        setImage(Cursor::pathCursor);
+    }
+}
+
+void Cursor::setPath(string &pathCursor) {
+    Cursor::pathCursor = pathCursor;
+}
+
+Cursor::~Cursor() {
+    delete Cursor::cursor;
+}
+
+Cursor* Cursor::cursor = 0;
+string Cursor::pathCursor = "";

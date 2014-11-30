@@ -31,7 +31,6 @@ void FifteenGame::freeResources() {
 
 FifteenGame::~FifteenGame() {
     // премахваме обекта
-    background = 0;
     delete background;
 }
 

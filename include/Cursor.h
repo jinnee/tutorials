@@ -6,12 +6,15 @@
 class Cursor : public AnimatedSprite
 {
     public:
-        Cursor(string& pathCursor);
+        static Cursor* getCursor();
+        static void setPath(string& pathCursor);
         virtual ~Cursor();
         void render(SDL_Surface* screen);
         void changeCursor(string& pathCursor);
     private:
-        string pathCursor;
+        Cursor();
+        static Cursor* cursor;
+        static string pathCursor;
 };
 
 #endif // CURSOR_H
