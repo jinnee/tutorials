@@ -16,6 +16,7 @@ StaticSprite::StaticSprite() : AbstractSprite()
 
 StaticSprite::~StaticSprite() {
     SpriteManager::deleteSprite(this->name);
+    SDL_FreeSurface(this->image);
 }
 
 void StaticSprite::setMouseButtonDown(bool isDown) {

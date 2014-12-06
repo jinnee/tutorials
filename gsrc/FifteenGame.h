@@ -1,9 +1,11 @@
 #ifndef FIFTEENGAME_H
 #define FIFTEENGAME_H
-#include <iostream>
 
 #include "../include/Game.h"
 #include "../include/Background.h"
+#include "../include/Cursor.h"
+
+#include "FConstants.h"
 
 class FifteenGame : public Game {
 public:
@@ -16,6 +18,11 @@ public:
     ~FifteenGame();
 private:
     Background* background;
+    Cursor* cursor;
+    AnimatedSprite* sparks;
+    Button* btnExitGame;
+    Button* btnGoGame;
+    Button* btnAboutGame;
 };
 
 #endif // FIFTEENGAME_H

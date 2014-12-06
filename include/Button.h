@@ -10,8 +10,6 @@ class Button : public StaticSprite
         Button();
         virtual ~Button();
         void render(SDL_Surface* screen);
-    protected:
-    private:
 };
 
 #endif // BUTTON_H

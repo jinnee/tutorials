@@ -1,18 +1,14 @@
 
 #include "../include/Button.h"
 
-Button::Button(): StaticSprite()
-{
+Button::Button(): StaticSprite() {
     name = "BUTTON";
     type = Constants::SpriteTypes::UI_BUTTON;
     setX(0);
     setY(0);
 }
 
-Button::~Button()
-{
-//    SDL_FreeSurface(this->image);
-    SpriteManager::deleteSprite(this->getName());
+Button::~Button() {
 }
 
 //смяна на картинката, когато курсора е върху бутона (или го напуска)
