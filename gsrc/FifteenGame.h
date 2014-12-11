@@ -2,9 +2,6 @@
 #define FIFTEENGAME_H
 
 #include "../include/Game.h"
-#include "../include/Background.h"
-#include "../include/Cursor.h"
-
 #include "FConstants.h"
 
 class FifteenGame : public Game {

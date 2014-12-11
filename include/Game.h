@@ -5,6 +5,7 @@
 #include "AbstractGame.h"
 #include "SdlApplication.h"
 #include "Cursor.h"
+#include "Background.h"
 
 #include "Button.h"
 
