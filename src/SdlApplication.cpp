@@ -8,6 +8,17 @@ SdlApplication::SdlApplication() {
     this->imageFlags = IMG_INIT_PNG;
 }
 
+void SdlApplication::setIcon(string iconPath){
+    SDL_Surface* iconSurface = IMG_Load(iconPath.c_str());
+
+    if (iconSurface == NULL) {
+        printf("Unable to load image %s! SDL_image Error: %s\n", iconPath.c_str(), IMG_GetError());
+    } else {
+        SDL_SetWindowIcon(appWindow, iconSurface);
+        SDL_FreeSurface(iconSurface);
+    }
+}
+
 SdlApplication::~SdlApplication() {
 }
 

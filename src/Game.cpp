@@ -24,6 +24,10 @@ void Game::setTitle(char* title) {
     mSdlApplication->setTitle(this->title);
 }
 
+void Game::setIcon(string path) {
+    mSdlApplication->setIcon(path);
+}
+
 void Game::start(int sw, int sh){
     mSdlApplication->setTitle("SDL Application");
     mSdlApplication->setWindowSize(sw, sh);
@@ -68,7 +72,8 @@ void Game::g_events() {
                     if ( vectorOfSprites[i]->getType() == Constants::SpriteTypes::MOUSE_CURSOR ) {
                         vectorOfSprites[i]->setPosition(mouse_x, mouse_y);
                     }
-                    if (vectorOfSprites[i]->getType() != Constants::SpriteTypes::BACKGROUND) {
+                    if (vectorOfSprites[i]->getType() != Constants::SpriteTypes::BACKGROUND)
+                    {
                         vectorOfSprites[i]->setMousePosXY(mouse_x, mouse_y);
                     }
                     break;

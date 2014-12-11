@@ -6,7 +6,6 @@
 #include "SdlApplication.h"
 #include "Cursor.h"
 #include "Background.h"
-
 #include "Button.h"
 
 class Game : public SpriteManager, public AbstractGame
@@ -19,6 +18,7 @@ class Game : public SpriteManager, public AbstractGame
         void start(int,int);
         SDL_PixelFormat* getPixelFormat();
         void setTitle(char* title);
+        void setIcon(string);
         void setWindowSize(int,int);
         void setDone(bool);
         int getWidth();

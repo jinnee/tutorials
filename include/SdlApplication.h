@@ -17,6 +17,7 @@ public:
     void setTitle(char*);
     void setWindowSize(int,int);
     char* getTitle();
+    void setIcon(string);
     SDL_PixelFormat* getPixelFormat();
     SDL_Surface* getSurface();
     SDL_Window* getWindow();
