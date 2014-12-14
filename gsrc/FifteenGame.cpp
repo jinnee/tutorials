@@ -89,17 +89,18 @@ void FifteenGame::freeResources() {
 }
 
 FifteenGame::~FifteenGame() {
-    background = 0;
     delete background;
-    cursor = 0;
+    background = 0;
     delete cursor;
-    sparks = 0;
+    cursor = 0;
     delete sparks;
-    btnExitGame = 0;
+    sparks = 0;
     delete btnExitGame;
-    btnGoGame = 0;
+    btnExitGame = 0;
     delete btnGoGame;
-    btnAboutGame = 0;
+    btnGoGame = 0;
     delete btnAboutGame;
+    btnAboutGame = 0;
+    cout << "del";
 }
 
