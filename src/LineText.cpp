@@ -11,27 +11,26 @@ LineText::LineText(): StaticSprite(){
     this->setY(0);
 }
 
-void LineText::setText(wstring text){
+void LineText::setText(wstring text) {
     this->text = text;
     numberOfLetters = text.length();
+    textLength = (this->text).length();
 }
 
-void LineText::setFont(BmpFont* bf)
-{
+void LineText::setFont(BmpFont* bf) {
     this->bmpFont = bf;
-
+    this->image = this->bmpFont->getImage();
     this->width = this->bmpFont->getWidth();
     this->height = this->bmpFont->getHeight();
+    programFontMap = bmpFont->getFontMap();
 }
 
-LineText::~LineText(){
+LineText::~LineText() {
     //dtor
 }
 
 void LineText::render(SDL_Surface* screen) {
     SDL_Rect src, dest;
-    unsigned int textLength = (this->text).length();
-    map<int, int> programFontMap = bmpFont->getFontMap();
 
     for (unsigned int i = 0; i < textLength; ++i)
     {
@@ -45,7 +44,7 @@ void LineText::render(SDL_Surface* screen) {
           dest.w = this->width;
           dest.h = this->height;
 
-          SDL_BlitSurface(this->bmpFont->getImage(), &src, screen, &dest);
+          SDL_BlitSurface(this->image, &src, screen, &dest);
     }
 }
 

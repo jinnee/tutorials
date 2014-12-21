@@ -15,6 +15,8 @@ public:
     ~FifteenGame();
 private:
     Background* background;
+    string cursor_ladybug;
+    bool cursor_flag;
     Cursor* cursor;
     AnimatedSprite* sparks;
     Button* btnExitGame;

@@ -9,9 +9,14 @@ FifteenGame::FifteenGame() {
 
 void FifteenGame::init() {
     this->setTitle("Игра 15");
+    // зареждаме иконата
+    this->setIcon(Constants::RESOURCE_DIR + Constants::pathSeparator + "icon.png");
 
+    cursor_ladybug = Constants::RESOURCE_DIR + Constants::pathSeparator + "cursor-ladybug.png";
+    cursor_flag = false;
     // създаваме си обекта background
     background = new Background();
+    background->setName("background");
     // зареждаме картинката
     background->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "background.png");
     // прибавяме към SpriteManager - Game наследява SpriteManager
@@ -83,24 +88,49 @@ void FifteenGame::render() {
     btnGoGame->render(screen);
     btnAboutGame->render(screen);
     cursor->render(screen);
+
+    if (btnExitGame->isCursorInSprite()
+            || btnGoGame->isCursorInSprite()
+            || btnAboutGame->isCursorInSprite()) {
+        cursor->changeCursor(cursor_ladybug);
+        cursor_flag = true;
+    } else {
+        if (cursor_flag) {
+            cout <<"in"<<endl;
+            cursor_flag = false;
+            cursor->changeCursor(FConstants::STANDART_CURSOR);
+        }
+    }
+    // изход от играта
+    if (btnExitGame->isMouseButtonDown()) {
+        this->setDone(true);
+    }
 }
 
 void FifteenGame::freeResources() {
 }
 
 FifteenGame::~FifteenGame() {
-    delete background;
-    background = 0;
-    delete cursor;
-    cursor = 0;
-    delete sparks;
-    sparks = 0;
-    delete btnExitGame;
-    btnExitGame = 0;
-    delete btnGoGame;
-    btnGoGame = 0;
-    delete btnAboutGame;
-    btnAboutGame = 0;
-    cout << "del";
+    if (background){
+        delete background;
+        background = 0;
+    }
+    if(sparks){
+        delete sparks;
+        sparks = 0;
+    }
+    if(btnExitGame){
+        delete btnExitGame;
+        btnExitGame = 0;
+    }
+    if(btnGoGame){
+        delete btnGoGame;
+        btnGoGame = 0;
+    }
+    if(btnAboutGame){
+        delete btnAboutGame;
+        btnAboutGame = 0;
+    }
+    cout << "del"<<endl;
 }
 

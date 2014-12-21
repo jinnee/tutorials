@@ -7,6 +7,9 @@
 #include "Cursor.h"
 #include "Background.h"
 #include "Button.h"
+#include "BmpFont.h"
+#include "LineText.h"
+#include "TextMessage.h"
 
 class Game : public SpriteManager, public AbstractGame
 {

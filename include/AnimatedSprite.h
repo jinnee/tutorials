@@ -9,7 +9,7 @@ class AnimatedSprite :  public StaticSprite
 {
 	public:
 		AnimatedSprite();
-		~AnimatedSprite();
+        virtual ~AnimatedSprite();
 
 		SDL_Rect origin;
 

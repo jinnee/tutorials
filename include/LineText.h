@@ -21,6 +21,8 @@ class LineText : public StaticSprite
         int width;
         int height;
         int numberOfLetters;
+        map<int, int> programFontMap;
+        unsigned int textLength;
 };
 
 #endif // LINETEXT_H_INCLUDED

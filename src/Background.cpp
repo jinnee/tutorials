@@ -14,5 +14,10 @@ Background::~Background()
 }
 
 void Background::render(SDL_Surface* screen) {
-    StaticSprite::render(screen);
+    if ( this->isCursorInSprite() ) {
+        SpriteManager::mouseEventFrom = this->getName();
+        StaticSprite::render(screen);
+    } else {
+        StaticSprite::render(screen);
+    }
 }
