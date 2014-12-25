@@ -60,7 +60,7 @@ void Game::g_events() {
         int vectorOfSpritesSize = vectorOfSprites.size();
 
         for (int i = 0; i < vectorOfSpritesSize; i++) {
-            cout << "sprites "<< i << ": " << vectorOfSprites[i]->getName() << endl;
+            //cout << "sprites "<< i << ": " << vectorOfSprites[i]->getName() << endl;
             // кое е съобщението
             switch (event.type)
             {

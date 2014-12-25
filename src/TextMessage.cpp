@@ -17,7 +17,9 @@ TextMessage::TextMessage():StaticSprite() {
     heightNewSurface = 100;
     showTextMessage = true;
     textTitle = new LineText();
+    textTitle->setName("title_text");
     textContent = new LineText();
+    textContent->setName("text_content");
 }
 
 void TextMessage::init() {
@@ -39,7 +41,7 @@ TextMessage::~TextMessage(){
         delete textTitle;
     }
     if(textContent) {
-        delete textContent;
+        //delete textContent;
     }
 }
 

@@ -16,9 +16,6 @@ void SpriteManager::deleteSprite(string name){
         if ( vectorOfSprites[i]->getName() == name ) {
             it = vectorOfSprites.begin()+i;
             vectorOfSprites.erase(it);
-//            cout << "delete:" << (*it)->getName() << endl;
-//            delete *it;
-//            *it = 0;
             break;
         }
     }

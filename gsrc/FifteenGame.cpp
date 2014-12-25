@@ -72,39 +72,95 @@ void FifteenGame::init() {
     btnAboutGame->setY(exitBtnBottom - btnAboutGame->getSpriteHeight() - 15);
     addSprite(btnAboutGame);
 
+    //урок 2
+    bmpFont = new BmpFont();
+    bmpFont->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "sampleFont.png");
+    bmpFont->initFont(117, 1);
+    //урок 2
+    titleText = new LineText();
+    titleText->setFont(bmpFont);
+    titleText->setText(L"Игра");
+    titleText->setX((getWidth() - titleText->getWidth())/2);
+    titleText->setY(150);
+    //урок 2
+    bmpFont14 = new BmpFont();
+    bmpFont14->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "font14.png");
+    bmpFont14->initFont(132, 1);
+    wstring stringFont14 = L" !,.0123456789:?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюя";
+    bmpFont14->setStringFont(stringFont14);
+    //урок 2
+    aboutTextMessage = new TextMessage();
+    aboutTextMessage->setBmpFont(bmpFont14);
+    aboutTextMessage->setTitle(L"Игра 15");
+    aboutTextMessage->setContent(L"Jinnee представя!");
+    aboutTextMessage->setX((getWidth()-350)/2);
+    aboutTextMessage->setY(150);
+    aboutTextMessage->setWidth(350);
+    aboutTextMessage->setHeight(150);
+    aboutTextMessage->setShowTextMessage(false);
+    aboutTextMessage->init();
 }
 
 void FifteenGame::update(double deltaTime) {
     if (sparks) {
         sparks->update(deltaTime);
     }
+    if (mGame15 && GameState::inGame == 1) {
+        mGame15->update(deltaTime);
+    }
 }
 
 void FifteenGame::render() {
-    // показваме
-    background->render(screen);
-    sparks->render(screen);
-    btnExitGame->render(screen);
-    btnGoGame->render(screen);
-    btnAboutGame->render(screen);
-    cursor->render(screen);
-
-    if (btnExitGame->isCursorInSprite()
-            || btnGoGame->isCursorInSprite()
-            || btnAboutGame->isCursorInSprite()) {
-        cursor->changeCursor(cursor_ladybug);
-        cursor_flag = true;
-    } else {
-        if (cursor_flag) {
-            cout <<"in"<<endl;
-            cursor_flag = false;
-            cursor->changeCursor(FConstants::STANDART_CURSOR);
+    if( GameState::inGame == 0 ) {
+        if (mGame15){
+            mGame15 = 0;
+            delete mGame15;
         }
+        // показваме
+        background->render(screen);
+        sparks->render(screen);
+        btnExitGame->render(screen);
+        btnGoGame->render(screen);
+        btnAboutGame->render(screen);
+        // урок 2
+        titleText->render(screen);
+        aboutTextMessage->render(screen);
+
+        if (btnExitGame->isCursorInSprite()
+                || btnGoGame->isCursorInSprite()
+                || btnAboutGame->isCursorInSprite()) {
+            cursor->changeCursor(cursor_ladybug);
+            cursor_flag = true;
+        } else {
+            if (cursor_flag) {
+                cursor_flag = false;
+                cursor->changeCursor(FConstants::STANDART_CURSOR);
+            }
+        }
+
+        if ( btnGoGame ->isMouseButtonDown()) {
+            GameState::inGame = 1;
+            aboutTextMessage->setShowTextMessage(false);
+            cursor->changeCursor(FConstants::STANDART_CURSOR);
+            mGame15 = new Game15(screen);
+            mGame15->init();
+        } else if (btnAboutGame->isMouseButtonDown()) {
+            //урок 2
+            if (!aboutTextMessage->getShowTextMessage()) {
+                aboutTextMessage->setShowTextMessage(true);
+            } else {
+                aboutTextMessage->setShowTextMessage(false);
+            }
+            btnAboutGame->setMouseButtonDown(false);
+        }
+        // изход от играта
+        if (btnExitGame->isMouseButtonDown()) {
+            this->setDone(true);
+        }
+    } else {
+        mGame15->render();
     }
-    // изход от играта
-    if (btnExitGame->isMouseButtonDown()) {
-        this->setDone(true);
-    }
+    cursor->render(screen);
 }
 
 void FifteenGame::freeResources() {
@@ -131,6 +187,25 @@ FifteenGame::~FifteenGame() {
         delete btnAboutGame;
         btnAboutGame = 0;
     }
+    // урок 2
+    if (bmpFont) {
+        delete bmpFont;
+        bmpFont = 0;
+    }
+    if (titleText) {
+        delete titleText;
+        titleText = 0;
+    }
+    // урок 2
+    if (bmpFont14) {
+        delete bmpFont14;
+        bmpFont14 = 0;
+    }
+    if (aboutTextMessage) {
+        delete aboutTextMessage;
+        aboutTextMessage = 0;
+    }
+
     cout << "del"<<endl;
 }
 

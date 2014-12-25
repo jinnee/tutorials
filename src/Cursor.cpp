@@ -33,7 +33,6 @@ void Cursor::setPath(string &pathCursor) {
 }
 
 Cursor::~Cursor() {
-    delete Cursor::cursor;
 }
 
 Cursor* Cursor::cursor = 0;
