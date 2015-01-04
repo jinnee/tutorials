@@ -22,6 +22,8 @@ public:
     virtual ~Game15();
 private:
     Button* btnToMainMenu;
+    Button* btnNewGame;
+    Button* btnRestartGame;
     Background* mBackground;
     SDL_Surface* screen;
 };
