@@ -2,6 +2,10 @@
 
 Game15::Game15(SDL_Surface* screen) {
     this->screen = screen;
+    buttonsLeftMargin = 388;
+    buttonsHeight = 30;
+    buttonsTopMenu = 10;
+    buttonsDistance = 5;
 }
 
 void Game15::setSurface(SDL_Surface* screen) {
@@ -9,29 +13,29 @@ void Game15::setSurface(SDL_Surface* screen) {
 }
 
 void Game15::init() {
-    btnToMainMenu = new Button();
-    btnToMainMenu->setX(377+11);
-    btnToMainMenu->setY(10+31+5+31+5);
-    btnToMainMenu->setTilesXY(1,2);
-    btnToMainMenu->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "toMainMenu.png");
-    btnToMainMenu->setName("btnToMainMenu");
-    SpriteManager::addSprite(btnToMainMenu);
-
     btnNewGame = new Button();
-    btnNewGame->setX(377+11);
-    btnNewGame->setY(10);
+    btnNewGame->setX(buttonsLeftMargin);
+    btnNewGame->setY(buttonsTopMenu);
     btnNewGame->setTilesXY(1,2);
     btnNewGame->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "newGame.png");
     btnNewGame->setName("btnNewGame");
     SpriteManager::addSprite(btnNewGame);
 
     btnRestartGame = new Button();
-    btnRestartGame->setX(377+11);
-    btnRestartGame->setY(10+31+5);
+    btnRestartGame->setX(buttonsLeftMargin);
+    btnRestartGame->setY(buttonsTopMenu+buttonsHeight+buttonsDistance);
     btnRestartGame->setTilesXY(1,2);
     btnRestartGame->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "restart.png");
     btnRestartGame->setName("btnRestartGame");
     SpriteManager::addSprite(btnRestartGame);
+
+    btnToMainMenu = new Button();
+    btnToMainMenu->setX(buttonsLeftMargin);
+    btnToMainMenu->setY(buttonsTopMenu+2*buttonsHeight+buttonsDistance*2);
+    btnToMainMenu->setTilesXY(1,2);
+    btnToMainMenu->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "toMainMenu.png");
+    btnToMainMenu->setName("btnToMainMenu");
+    SpriteManager::addSprite(btnToMainMenu);
 
     mBackground = new Background();
     mBackground->setName("background_board");

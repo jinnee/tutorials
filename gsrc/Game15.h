@@ -26,6 +26,10 @@ private:
     Button* btnRestartGame;
     Background* mBackground;
     SDL_Surface* screen;
+    int buttonsTopMenu;
+    int buttonsLeftMargin;
+    int buttonsHeight;
+    int buttonsDistance;
 };
 
 
