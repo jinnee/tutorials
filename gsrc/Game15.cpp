@@ -41,6 +41,9 @@ void Game15::init() {
     mBackground->setName("background_board");
     mBackground->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "board.png");
     SpriteManager::addSprite(mBackground);
+
+    mNumbers = new Numbers();
+    mNumbers->setSurface(screen);
 }
 
 void Game15::render() {
@@ -50,12 +53,19 @@ void Game15::render() {
         btnNewGame->render(screen);
         btnRestartGame->render(screen);
 
+        if (mNumbers) {
+            mNumbers->render();
+        }
+
         if (btnToMainMenu->isMouseButtonDown()) {
             GameState::inGame = 0;
             delete mBackground;
             delete btnToMainMenu;
             delete btnNewGame;
             delete btnRestartGame;
+
+            delete mNumbers;
+            mNumbers = 0;
 
             SpriteManager::deleteSprite("background_board");
             SpriteManager::deleteSprite("btnToMainMenu");

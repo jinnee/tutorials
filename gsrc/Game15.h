@@ -8,6 +8,7 @@
 #include "../include/Background.h"
 #include "FConstants.h"
 #include "GameState.h"
+#include "Numbers.h"
 
 class Game15 : public AbstractGame {
 public:
@@ -30,6 +31,7 @@ private:
     int buttonsLeftMargin;
     int buttonsHeight;
     int buttonsDistance;
+    Numbers* mNumbers;
 };
 
 
