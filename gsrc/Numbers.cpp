@@ -2,89 +2,61 @@
 
 Numbers::Numbers()
 {
-    startX = 40;
-    startY = 40;
-    numberWidth = 80;
-    numberHeight = 80;
-    objectNumbers = new AnimatedSprite();
-    objectNumbers->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "numbers.png");
-    objectNumbers->setName("EMPTY");
+    tilePosX = 30;
+    tilePosY = 30;
+    tileWidth = 80;
+    tileHeight = 80;
 
-    int x = 0;
-    int y = 0;
-    modelNumbers = getNumberOrder();
-
-    for (int m = 0; m < 16; m++) {
-         if (modelNumbers[m] != 0) {
-            number = new AnimatedSprite();
-            number->setTilesXY(15, 1);
-            number->setImage(objectNumbers->getImage());
-            number->setGroup("numbers");
-            number->setName("number_"+ConvertFunctions::intToString(modelNumbers[m]-1));
-            number->setFrameBeginEnd(modelNumbers[m]-1, modelNumbers[m]-1);
-            number->calculate(10);
-
-            number->setX(30+80*x);
-            number->setY(30+80*y);
-            SpriteManager::addSprite(number);
-            vectorOfNumbers.push_back(number);
-            //bVectorOfNumbers.push_back(number);
-        } else {
-            vectorOfNumbers.push_back(objectNumbers);
-            //bVectorOfNumbers.push_back(objectNumbers);
-        }
-        x++;
-
-        if ( x % 4 == 0) {
-            x = 0;
-            y++;
-        }
+    for (int i = 0; i < 16; i++) {
+        initialPosition[i] = 0;
+        targetPosition[i] = i+1;
     }
+
+    targetPosition[15] = 0;
+
+    initVectorOfTiles(false);
 }
 
 void Numbers::render() {
-    for (int m = 0; m < 16; m++) {
-        if (vectorOfNumbers[m]->isMouseButtonDown()) {
-            switch (moveDecision(m)) {
-            case LEFT:
-                vectorOfNumbers[m]->setX(vectorOfNumbers[m]->getX() - 80);
-                vectorOfNumbers[m]->setMouseButtonDown(false);
-                swap(vectorOfNumbers[m], vectorOfNumbers[m-1]);
-                break;
-            case TOP:
-                vectorOfNumbers[m]->setY(vectorOfNumbers[m]->getY() - 80);
-                vectorOfNumbers[m]->setMouseButtonDown(false);
-                swap(vectorOfNumbers[m], vectorOfNumbers[m-4]);
-                break;
-            case RIGHT:
-                vectorOfNumbers[m]->setX(vectorOfNumbers[m]->getX() + 80);
-                vectorOfNumbers[m]->setMouseButtonDown(false);
-                swap(vectorOfNumbers[m], vectorOfNumbers[m+1]);
-                break;
-            case BOTTOM:
-                vectorOfNumbers[m]->setY(vectorOfNumbers[m]->getY() + 80);
-                vectorOfNumbers[m]->setMouseButtonDown(false);
-                swap(vectorOfNumbers[m], vectorOfNumbers[m+4]);
-                break;
-            default:
-                break;
+    if (vectorOfTiles.size() > 0) {
+        for (int m = 0; m < 16; m++) {
+            if (vectorOfTiles[m]->isMouseButtonDown()) {
+                switch (moveDecision(m)) {
+                case LEFT:
+                    vectorOfTiles[m]->setX(vectorOfTiles[m]->getX() - tileWidth);
+                    vectorOfTiles[m]->setMouseButtonDown(false);
+                    swap(vectorOfTiles[m], vectorOfTiles[m-1]);
+                    break;
+                case TOP:
+                    vectorOfTiles[m]->setY(vectorOfTiles[m]->getY() - tileHeight);
+                    vectorOfTiles[m]->setMouseButtonDown(false);
+                    swap(vectorOfTiles[m], vectorOfTiles[m-4]);
+                    break;
+                case RIGHT:
+                    vectorOfTiles[m]->setX(vectorOfTiles[m]->getX() + tileWidth);
+                    vectorOfTiles[m]->setMouseButtonDown(false);
+                    swap(vectorOfTiles[m], vectorOfTiles[m+1]);
+                    break;
+                case BOTTOM:
+                    vectorOfTiles[m]->setY(vectorOfTiles[m]->getY() + tileHeight);
+                    vectorOfTiles[m]->setMouseButtonDown(false);
+                    swap(vectorOfTiles[m], vectorOfTiles[m+4]);
+                    break;
+                default:
+                    break;
+                }
+
+                if (isFinish(targetPosition)) {
+                    cout << "Game over!" << endl;
+                }
             }
+            vectorOfTiles[m]->render(this->screen);
         }
-        vectorOfNumbers[m]->render(this->screen);
     }
 }
 
 Numbers::~Numbers(){
-    // изтриване от SpriteManager
-    for (int m = 0; m < 16; m++) {
-        SpriteManager::deleteSprite("number_"+ConvertFunctions::intToString(modelNumbers[m]-1));
-    }
-    vectorOfNumbers.clear();
-    for (int i = 0; i < vectorOfNumbers.size(); i++) {
-        delete vectorOfNumbers[i];
-    }
-    delete objectNumbers;
-    cout << "delete Numbers" << endl;
+    clear();
 }
 
 void Numbers::setSurface(SDL_Surface* screen) {
@@ -100,51 +72,61 @@ int Numbers::moveDecision(int pos) {
     int result = 0;
 
     if (pos - 1 >= 0 && pos % 4 != 0) {
-        left = modelNumbers[pos - 1];
+        left = currentPositionOfNumbers[pos - 1];
     }
 
     if (pos + 1 <= 15 && pos % 4 != 3) {
-        right = modelNumbers[pos + 1];
+        right = currentPositionOfNumbers[pos + 1];
     }
 
     if (pos - 4 >= 0) {
-        top = modelNumbers[pos - 4];
+        top = currentPositionOfNumbers[pos - 4];
     }
 
     if (pos + 4 <= 15) {
-        bottom = modelNumbers[pos + 4];
+        bottom = currentPositionOfNumbers[pos + 4];
     }
 
     if (left == 0) {
-        modelNumbers[pos - 1] = modelNumbers[pos];
-        modelNumbers[pos] = 0;
+        currentPositionOfNumbers[pos - 1] = currentPositionOfNumbers[pos];
+        currentPositionOfNumbers[pos] = 0;
         result = LEFT;
     } else if (right == 0) {
-        modelNumbers[pos + 1] = modelNumbers[pos];
-        modelNumbers[pos] = 0;
+        currentPositionOfNumbers[pos + 1] = currentPositionOfNumbers[pos];
+        currentPositionOfNumbers[pos] = 0;
         result = RIGHT;
     } else if (top == 0) {
-        modelNumbers[pos - 4] = modelNumbers[pos];
-        modelNumbers[pos] = 0;
+        currentPositionOfNumbers[pos - 4] = currentPositionOfNumbers[pos];
+        currentPositionOfNumbers[pos] = 0;
         result = TOP;
     } else if (bottom == 0) {
-        modelNumbers[pos + 4] = modelNumbers[pos];
-        modelNumbers[pos] = 0;
+        currentPositionOfNumbers[pos + 4] = currentPositionOfNumbers[pos];
+        currentPositionOfNumbers[pos] = 0;
         result = BOTTOM;
     }
-
-    cout << "delete Game15" << endl;
 
     return result;
 }
 
-int* Numbers::getNumberOrder() {
+int* Numbers::getValidNumbersPosition() {
     static int arr[16] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
     int inversions= 0;
+    int zero = 1;
 
     do {
-        inversions= 0;
+        zero = 1;
+        inversions = 0;
         random_shuffle(&arr[0], &arr[16]);
+
+        // търсим къде е 0
+        for(int i = 0; i < 16; i++) {
+            if (arr[i] != 0) {
+                zero++;
+            } else {
+                break;
+            }
+        }
+
         for (int i = 0; i < 16; i++) {
             for (int j = i+1; j < 16; j++) {
                 if ( arr[i] - arr[j] > 0 && arr[j] != 0) {
@@ -152,7 +134,99 @@ int* Numbers::getNumberOrder() {
                 }
             }
         }
-    } while (inversions % 2 != 0);
+    } while ((inversions + zero + 1) % 2 != 0);
 
     return arr;
+}
+
+void Numbers::newGame() {
+    clear();
+    initVectorOfTiles(false);
+}
+
+void Numbers::restartGame(){
+    clear();
+    initVectorOfTiles(true);
+}
+
+void Numbers::clear() {
+    // изтриване от SpriteManager
+    for (int m = 0; m < 16; m++) {
+        SpriteManager::deleteSprite("number_"+ConvertFunctions::intToString(currentPositionOfNumbers[m]-1));
+    }
+    vectorOfTiles.clear();
+    for (int i = 0; i < vectorOfTiles.size(); i++) {
+        delete vectorOfTiles[i];
+    }
+    delete emptyTile;
+}
+
+/**
+ * Инициализира
+ *
+ * @brief Numbers::initVectorOfNumbers
+ * @param restart
+ */
+void Numbers::initVectorOfTiles(bool restart) {
+    emptyTile = new AnimatedSprite();
+    emptyTile->setImage(Constants::RESOURCE_DIR + Constants::pathSeparator + "numbers.png");
+    emptyTile->setName("EMPTY");
+
+    int x = 0;
+    int y = 0;
+    if (restart) {
+        for (int i = 0; i < 16;i++) {
+            currentPositionOfNumbers[i] = initialPosition[i];
+        }
+    } else {
+        currentPositionOfNumbers = getValidNumbersPosition();
+        for (int i = 0; i < 16;i++) {
+            initialPosition[i] = currentPositionOfNumbers[i];
+        }
+    }
+
+    for (int m = 0; m < 16; m++) {
+         if (currentPositionOfNumbers[m] != 0) {
+            tile = new AnimatedSprite();
+            tile->setTilesXY(15, 1);
+            tile->setImage(emptyTile->getImage());
+            tile->setGroup("numbers");
+            tile->setName("number_"+ConvertFunctions::intToString(currentPositionOfNumbers[m]-1));
+            tile->setFrameBeginEnd(currentPositionOfNumbers[m]-1, currentPositionOfNumbers[m]-1);
+            tile->calculate(10);
+
+            tile->setX(tilePosX + tileWidth * x);
+            tile->setY(tilePosY + tileHeight * y);
+            SpriteManager::addSprite(tile);
+            vectorOfTiles.push_back(tile);
+        } else {
+            vectorOfTiles.push_back(emptyTile);
+        }
+        x++;
+
+        if (x % 4 == 0) {
+            x = 0;
+            y++;
+        }
+    }
+}
+
+/**
+ * Връща true, ако масивът currentPositionOfNumbers е еднакъв с целта target
+ *
+ * @brief Numbers::finish
+ * @param target каква подредба искаме да постигнем
+ * @return bool
+ */
+bool Numbers::isFinish(int* target) {
+    bool result = true;
+
+    for (int i = 0; i < 16; i++) {
+        if (target[i] != currentPositionOfNumbers[i]) {
+            result = false;
+            break;
+        }
+    }
+
+    return result;
 }

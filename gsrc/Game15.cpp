@@ -59,18 +59,15 @@ void Game15::render() {
 
         if (btnToMainMenu->isMouseButtonDown()) {
             GameState::inGame = 0;
-            delete mBackground;
-            delete btnToMainMenu;
-            delete btnNewGame;
-            delete btnRestartGame;
-
-            delete mNumbers;
-            mNumbers = 0;
 
             SpriteManager::deleteSprite("background_board");
             SpriteManager::deleteSprite("btnToMainMenu");
             SpriteManager::deleteSprite("btnNewGame");
             SpriteManager::deleteSprite("btnRestartGame");
+        } else if (btnNewGame->isMouseButtonDown()) {
+            mNumbers->newGame();
+        } else if (btnRestartGame->isMouseButtonDown()) {
+            mNumbers->restartGame();
         }
     }
 }
@@ -83,24 +80,17 @@ void Game15::freeResources() {
 }
 
 Game15::~Game15() {
+    delete mBackground;
+    mBackground = 0;
+    delete btnToMainMenu;
+    btnToMainMenu = 0;
+    delete btnNewGame;
+    btnNewGame = 0;
+    delete btnRestartGame;
+    btnRestartGame = 0;
+    delete mNumbers;
+    mNumbers = 0;
 
-    if(mBackground) {
-        delete mBackground;
-        mBackground = 0;
-    }
-
-    if(btnToMainMenu) {
-        delete btnToMainMenu;
-        btnToMainMenu = 0;
-    }
-    if(btnNewGame) {
-        delete btnNewGame;
-        btnNewGame = 0;
-    }
-    if(btnRestartGame) {
-        delete btnRestartGame;
-        btnRestartGame = 0;
-    }
     cout << "delete Game15" << endl;
 
 }

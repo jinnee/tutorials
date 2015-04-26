@@ -112,10 +112,8 @@ void FifteenGame::update(double deltaTime) {
 
 void FifteenGame::render() {
     if( GameState::inGame == 0 ) {
-        if (mGame15){
-            mGame15 = 0;
-            delete mGame15;
-        }
+        delete mGame15;
+        mGame15 = 0;
         // показваме
         background->render(screen);
         sparks->render(screen);
